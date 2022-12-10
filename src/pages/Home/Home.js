@@ -10,6 +10,9 @@ import {
   collection,
   getDocs,
   Timestamp,
+  doc,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 import db, { auth } from "../../helpers/firebase";
@@ -22,6 +25,8 @@ function Home(props) {
     surName: "",
   });
   const [userList, setUserList] = useState([]);
+  const [isButtonAdd, setIsButtonAdd] = useState(true);
+  const [updateId, setUpdateId] = useState(0);
 
   useEffect(() => {
     const getAll = () => {
@@ -52,6 +57,41 @@ function Home(props) {
       surName: userData.surName,
     });
     console.log("Document written with ID: ", docRef.id);
+    setUserData({
+      name: "",
+      surName: "",
+    });
+  };
+
+  const moveData = (data) => {
+    setUserData(data.data);
+    setUpdateId(data.id);
+    setIsButtonAdd(false);
+  };
+  const update = async (e) => {
+    e.preventDefault();
+    const taskDocRef = doc(db, "isimSoyisimTest", updateId);
+    try {
+      await updateDoc(taskDocRef, {
+        name: userData.name,
+        surName: userData.surName,
+      });
+      setUserData({
+        name: "",
+        surName: "",
+      });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const remove = async (id) => {
+    const taskDocRef = doc(db, "isimSoyisimTest", id);
+    try {
+      await deleteDoc(taskDocRef);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
@@ -82,15 +122,37 @@ function Home(props) {
               });
             }}
           />
-          <button onClick={add}>Ekle</button>
+          {isButtonAdd ? (
+            <button onClick={add}>Ekle</button>
+          ) : (
+            <>
+              <button onClick={update}>Güncelle</button>
+              <button
+                onClick={() => {
+                  setIsButtonAdd(true);
+                  setUserData({
+                    name: "",
+                    surName: "",
+                  });
+                }}
+              >
+                Vazgeç
+              </button>
+            </>
+          )}
         </form>
-        <br/>
+        <br />
         <div>
           {userList?.map((data) => (
-            <div style={{display: "flex", justifyContent: 'space-between'}} key={data.id}>
-            <h3>{data.id}</h3>
-            <h3>{data.data?.name}</h3>
-            <h3>{data.data?.surName}</h3>
+            <div
+              style={{ display: "flex", justifyContent: "space-between" }}
+              key={data.id}
+            >
+              <h3>{data.id}</h3>
+              <h3>{data.data?.name}</h3>
+              <h3>{data.data?.surName}</h3>
+              <button onClick={() => moveData(data)}>Güncelle</button>
+              <button onClick={() => remove(data.id)}>Sil</button>
             </div>
           ))}
         </div>
