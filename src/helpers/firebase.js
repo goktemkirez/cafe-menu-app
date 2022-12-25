@@ -3,23 +3,21 @@ import { initializeApp } from "firebase/app";
 import {
   GoogleAuthProvider,
   getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
+  // signInWithPopup,
+  // signInWithEmailAndPassword,
+  // createUserWithEmailAndPassword,
+  // sendPasswordResetEmail,
+  // signOut,
 } from "firebase/auth";
 import {
   getFirestore,
-  query,
-  where,
-  addDoc,
-  collection,
-  getDocs,
+  // query,
+  // where,
+  // addDoc,
+  // collection,
+  // getDocs,
 } from "firebase/firestore";
-import { getDatabase, ref, onValue} from 'firebase/database'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// import { getDatabase, ref, onValue} from 'firebase/database'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional

@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { signOut } from "firebase/auth";
+// import { signOut } from "firebase/auth";
 import {
-  getFirestore,
+  // getFirestore,
   query,
-  where,
+  // where,
   addDoc,
   onSnapshot,
   orderBy,
   collection,
-  getDocs,
-  Timestamp,
+  // getDocs,
+  // Timestamp,
   doc,
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
 
-import db, { auth } from "../../helpers/firebase";
+import db from "../../helpers/firebase";
 import "./Home.css";
 
 function Home(props) {
@@ -98,7 +98,6 @@ function Home(props) {
     <div className="login">
       <div className="container">
         <h2>Hoşgeldin {user?.displayName}</h2>
-        <button onClick={() => signOut(auth)}>Çıkış Yap</button>
         <form>
           İsim{" "}
           <input
